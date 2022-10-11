@@ -42,6 +42,7 @@ from .generation_logits_process import (
     RepetitionPenaltyLogitsProcessor,
     SuppressTokensAtBeginLogitsProcessor,
     SuppressTokensLogitsProcessor,
+    PermitTokensLogitsProcessor,
     TemperatureLogitsWarper,
     TopKLogitsWarper,
     TopPLogitsWarper,
@@ -776,6 +777,8 @@ class GenerationMixin:
             )
         if suppress_tokens is not None:
             processors.append(SuppressTokensLogitsProcessor(suppress_tokens))
+        if self.vocab_fsa is not None:
+            processors.append(PermitTokensLogitsProcessor())
         if begin_suppress_tokens is not None:
             begin_index = input_ids_seq_length
             begin_index = begin_index if (input_ids_seq_length > 1 or forced_bos_token_id is None) else begin_index + 1
@@ -1327,7 +1330,9 @@ class GenerationMixin:
             )
 
         # 6. determine generation mode
-        is_constraint_gen_mode = constraints is not None or force_words_ids is not None
+        is_vocab_constraint_gen_mode = self.vocab_fsa is not None
+        is_constraint_gen_mode = is_vocab_constraint_gen_mode or \
+                                 constraints is not None or force_words_ids is not None
         is_greedy_gen_mode = (
             (num_beams == 1) and (num_beam_groups == 1) and do_sample is False and not is_constraint_gen_mode
         )

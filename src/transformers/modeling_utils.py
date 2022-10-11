@@ -2364,6 +2364,8 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
 
         if tokenizer is not None and vocab is not None:
             model.vocab_fsa = VocabFSA(tokenizer, vocab)
+        else:
+            model.vocab_fsa = None
 
         return model
 

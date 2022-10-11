@@ -734,6 +734,26 @@ class SuppressTokensLogitsProcessor(LogitsProcessor):
         return scores
 
 
+class PermitTokensLogitsProcessor(LogitsProcessor):
+    r"""This processor can be used to limit the permitted tokens to a list of tokens. The processor will set all
+    other log probs to `-inf` so that they are not sampled."""
+
+    def __init__(self, vocab_fsa):
+        self.vocab_fsa = vocab_fsa
+
+    def __call__(self, input_ids, scores):
+        permit_tokens = self.vocab_fsa.next_tokens()
+        print("Permit Tokens len: {}".format(len(permit_tokens)))
+        print("Scores size: {}".format(scores.size))
+
+        # mask = np.ones(, np.bool)
+        # mask[permit_tokens] = False
+        # other_data = data[mask]
+
+        scores[:, permit_tokens] = -float("inf")
+        return scores
+
+
 class ForceTokensLogitsProcessor(LogitsProcessor):
     r"""This processor can be used to force a list of tokens. The processor will set their log probs to `inf` so that they
     are sampled at their corresponding index."""
