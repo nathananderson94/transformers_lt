@@ -91,11 +91,11 @@ class VocabFSA:
 
         punct = ".,?!;:'\"”)/…"
         for p in punct:
-            punc_ids.add((self.encode(p)[0]),)
+            punc_ids.add((self.encode(p)[0],))
             for q in punct:
-                punc_ids.add((self.encode(p + q)[0]),)
+                punc_ids.add((self.encode(p + q)[0],))
                 for r in punct:
-                    punc_ids.add((self.encode(p + q + r)[0]),)
+                    punc_ids.add((self.encode(p + q + r)[0],))
 
         return punc_ids
 
