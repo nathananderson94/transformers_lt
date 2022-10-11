@@ -109,6 +109,9 @@ else:
     IS_SAGEMAKER_MP_POST_1_10 = False
 
 
+from .vocab_fsa import VocabFSA
+
+
 @contextmanager
 def no_init_weights(_enable=True):
     """
@@ -2357,6 +2360,9 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
                     "error_msgs": error_msgs,
                 }
             return model, loading_info
+
+        if "tokenizer" in kwargs and "vocab" in kwargs:
+            model.vocab_fsa = VocabFSA(kwargs["tokenizer"], kwargs["vocab"])
 
         return model
 
