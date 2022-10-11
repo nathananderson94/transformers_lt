@@ -1662,7 +1662,8 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
         return mem
 
     @classmethod
-    def from_pretrained(cls, pretrained_model_name_or_path: Optional[Union[str, os.PathLike]], *model_args, **kwargs):
+    def from_pretrained(cls, pretrained_model_name_or_path: Optional[Union[str, os.PathLike]],
+                        tokenizer=None, vocab=None, *model_args, **kwargs):
         r"""
         Instantiate a pretrained pytorch model from a pre-trained model configuration.
 
@@ -2361,7 +2362,7 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
                 }
             return model, loading_info
 
-        if "tokenizer" in kwargs and "vocab" in kwargs:
+        if tokenizer is not None and vocab is not None:
             model.vocab_fsa = VocabFSA(kwargs["tokenizer"], kwargs["vocab"])
 
         return model
