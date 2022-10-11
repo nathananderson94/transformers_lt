@@ -2363,7 +2363,7 @@ class PreTrainedModel(nn.Module, ModuleUtilsMixin, GenerationMixin, PushToHubMix
             return model, loading_info
 
         if tokenizer is not None and vocab is not None:
-            model.vocab_fsa = VocabFSA(kwargs["tokenizer"], kwargs["vocab"])
+            model.vocab_fsa = VocabFSA(tokenizer, vocab)
 
         return model
 
