@@ -187,9 +187,13 @@ class VocabFSA:
 
     def set_start_state(self, inputs):
         self.cur_state = self.start_state
-        if len(inputs) == 0 or self.tokenizer.decode(inputs[-1])[-1].isspace():
+        if len(inputs) == 0:
+            self.last_token_id = None
             return
-        self.advance(self.next_tokens()[0])
+
+        self.last_token_id = inputs[-1]
+        if not self.tokenizer.decode(self.last_token_id)[-1].isspace():
+            self.advance(self.next_tokens()[0])
 
     def next_tokens(self):
         """ Return a list of the next possible token ids given the current state. """

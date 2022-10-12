@@ -1293,6 +1293,8 @@ class GenerationMixin:
             # if decoder-only then inputs_tensor has to be `input_ids`
             input_ids = inputs_tensor
 
+        self.vocab_fsa.set_start_state(inputs)
+
         # 5. Prepare `max_length` depending on other stopping criteria.
         input_ids_seq_length = input_ids.shape[-1]
         if max_length is None and max_new_tokens is None:
