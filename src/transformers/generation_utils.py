@@ -1330,9 +1330,7 @@ class GenerationMixin:
             )
 
         # 6. determine generation mode
-        is_vocab_constraint_gen_mode = self.vocab_fsa is not None
-        is_constraint_gen_mode = is_vocab_constraint_gen_mode or \
-                                 constraints is not None or force_words_ids is not None
+        is_constraint_gen_mode = constraints is not None or force_words_ids is not None or self.vocab_fsa is not None
         is_greedy_gen_mode = (
             (num_beams == 1) and (num_beam_groups == 1) and do_sample is False and not is_constraint_gen_mode
         )
