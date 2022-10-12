@@ -359,6 +359,8 @@ class ConstraintListState:
     def __init__(self, constraints: List[Constraint]):
         self.constraints = constraints
 
+        print("len(self.constraints):", len(self.constraints))
+
         # max # of steps required to fulfill a given constraint
         self.max_seqlen = max([c.seqlen for c in constraints])
         self.n_constraints = len(constraints)
