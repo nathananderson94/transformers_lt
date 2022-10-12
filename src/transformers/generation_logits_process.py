@@ -747,7 +747,7 @@ class PermitTokensLogitsProcessor(LogitsProcessor):
         print("Scores size: {}".format(scores.shape))
 
         mask = np.ones(scores.shape, np.bool)
-        mask[permit_tokens] = False
+        mask[:, permit_tokens] = False
         new_scores = scores[mask]
 
         print("mask:", mask)
