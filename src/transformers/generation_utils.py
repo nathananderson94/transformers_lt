@@ -3229,6 +3229,7 @@ class GenerationMixin:
         >>> tokenizer.batch_decode(outputs, skip_special_tokens=True)
         ['Wie alt sind Sie?']
         ```"""
+        print("len(logits_processor):", len(logits_processor))
         # init values
         logits_processor = logits_processor if logits_processor is not None else LogitsProcessorList()
         stopping_criteria = stopping_criteria if stopping_criteria is not None else StoppingCriteriaList()
