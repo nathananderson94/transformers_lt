@@ -744,7 +744,7 @@ class PermitTokensLogitsProcessor(LogitsProcessor):
     def __call__(self, input_ids, scores):
         permit_tokens = self.vocab_fsa.next_tokens()
         print("Permit Tokens len: {}".format(len(permit_tokens)))
-        print("Scores size: {}".format(scores.shape()))
+        print("Scores size: {}".format(scores.shape))
 
         # mask = np.ones(, np.bool)
         # mask[permit_tokens] = False
