@@ -746,9 +746,8 @@ class PermitTokensLogitsProcessor(LogitsProcessor):
 
         mask = torch.ones(scores.shape, dtype=torch.bool)
         mask[:, permit_tokens] = False
-        new_scores = scores.masked_fill_(mask, -float("inf"))
-        print("new_scores:", new_scores)
-        return new_scores
+
+        return scores.masked_fill_(mask, -float("inf"))
 
 
 class ForceTokensLogitsProcessor(LogitsProcessor):
