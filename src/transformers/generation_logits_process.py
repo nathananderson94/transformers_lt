@@ -746,9 +746,12 @@ class PermitTokensLogitsProcessor(LogitsProcessor):
         print("Permit Tokens len: {}".format(len(permit_tokens)))
         print("Scores size: {}".format(scores.shape))
 
-        # mask = np.ones(, np.bool)
-        # mask[permit_tokens] = False
-        # other_data = data[mask]
+        mask = np.ones(scores.shape, np.bool)
+        mask[permit_tokens] = False
+        new_scores = scores[mask]
+
+        print("mask:", mask)
+        print("new_scores:", new_scores)
 
         scores[:, permit_tokens] = -float("inf")
         return scores
