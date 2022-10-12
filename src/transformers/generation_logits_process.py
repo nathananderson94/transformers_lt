@@ -743,21 +743,12 @@ class PermitTokensLogitsProcessor(LogitsProcessor):
 
     def __call__(self, input_ids, scores):
         permit_tokens = self.vocab_fsa.next_tokens()
-        print("Permit Tokens len: {}".format(len(permit_tokens)))
-        print("Scores shape: {}".format(scores.shape))
 
         mask = torch.ones(scores.shape, dtype=torch.bool)
-        print("Mask shape:", mask.shape)
-        print("Mask sum:", torch.sum(mask))
         mask[:, permit_tokens] = False
-        print("Mask sum:", torch.sum(mask))
-        new_scores = scores[mask]
-
-        print("mask:", mask)
+        new_scores = scores.masked_fill_(mask, -float("inf"))
         print("new_scores:", new_scores)
-
-        scores[:, permit_tokens] = -float("inf")
-        return scores
+        return new_scores
 
 
 class ForceTokensLogitsProcessor(LogitsProcessor):
