@@ -778,7 +778,7 @@ class GenerationMixin:
         if suppress_tokens is not None:
             processors.append(SuppressTokensLogitsProcessor(suppress_tokens))
         if self.vocab_fsa is not None:
-            processors.append(PermitTokensLogitsProcessor())
+            processors.append(PermitTokensLogitsProcessor(self.vocab_fsa))
         if begin_suppress_tokens is not None:
             begin_index = input_ids_seq_length
             begin_index = begin_index if (input_ids_seq_length > 1 or forced_bos_token_id is None) else begin_index + 1
