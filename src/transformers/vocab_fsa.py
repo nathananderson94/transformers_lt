@@ -106,7 +106,7 @@ class VocabFSA:
         for tok_ids in self.batch_encode(ws_chars):
             ws_ids.add(tok_ids)
 
-        ws_ids.add((self.tokenizer.eos_token_id,))
+        ws_ids.add((self.tokenizer.eos_token_id + 1,))
 
         return ws_ids
 
