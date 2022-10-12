@@ -1330,7 +1330,7 @@ class GenerationMixin:
             )
 
         # 6. determine generation mode
-        is_constraint_gen_mode = constraints is not None or force_words_ids is not None or self.vocab_fsa is not None
+        is_constraint_gen_mode = constraints is not None or force_words_ids is not None
         is_greedy_gen_mode = (
             (num_beams == 1) and (num_beam_groups == 1) and do_sample is False and not is_constraint_gen_mode
         )
@@ -3229,7 +3229,6 @@ class GenerationMixin:
         >>> tokenizer.batch_decode(outputs, skip_special_tokens=True)
         ['Wie alt sind Sie?']
         ```"""
-        print("len(logits_processor):", len(logits_processor))
         # init values
         logits_processor = logits_processor if logits_processor is not None else LogitsProcessorList()
         stopping_criteria = stopping_criteria if stopping_criteria is not None else StoppingCriteriaList()
