@@ -20,10 +20,6 @@ class VocabFSA:
             interpreted as epsilon in pynini """
         return tuple(tok_id + 1 for tok_id in self.tokenizer.encode(s))
 
-    def decode(self, tokens):
-        """ Shift all token ids back down 1 to their original id """
-        return tuple(self.tokenizer.decode(tok - 1) for tok in tokens)
-
     def batch_encode(self, strings):
         """ Iterate over token strings, returning a list of tuples of token ids """
         ret = []
@@ -188,6 +184,11 @@ class VocabFSA:
 
         self.last_token_id = token_id
         self.cur_state = self.state_dict[self.cur_state][self.last_token_id]
+
+    def shift_start_state(self, inputs):
+        if len(inputs) == 0 or self.tokenizer.decode(inputs[-1])[-1].isspace():
+            return
+        self.advance(self.next_tokens()[0])
 
     def next_tokens(self):
         """ Return a list of the next possible token ids given the current state. """
