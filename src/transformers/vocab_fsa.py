@@ -185,7 +185,8 @@ class VocabFSA:
         self.last_token_id = token_id
         self.cur_state = self.state_dict[self.cur_state][self.last_token_id]
 
-    def shift_start_state(self, inputs):
+    def set_start_state(self, inputs):
+        self.cur_state = self.start_state
         if len(inputs) == 0 or self.tokenizer.decode(inputs[-1])[-1].isspace():
             return
         self.advance(self.next_tokens()[0])
