@@ -103,10 +103,10 @@ class VocabFSA:
         ws_ids = set()
 
         ws_chars = " \t\n"
-        for tok_id in self.batch_encode(ws_chars):
-            ws_ids.add(tok_id)
+        for tok_ids in self.batch_encode(ws_chars):
+            ws_ids.add(tok_ids)
 
-        ws_ids.add(self.tokenizer.eos_token_id)
+        ws_ids.add((self.tokenizer.eos_token_id,))
 
         return ws_ids
 
