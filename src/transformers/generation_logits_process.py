@@ -746,7 +746,7 @@ class PermitTokensLogitsProcessor(LogitsProcessor):
         print("Permit Tokens len: {}".format(len(permit_tokens)))
         print("Scores shape: {}".format(scores.shape))
 
-        mask = torch.ones(scores.shape, torch.bool)
+        mask = torch.ones(scores.shape, dtype=torch.bool)
         print("Mask shape:", mask.shape)
         print("Mask sum:", torch.sum(mask))
         mask[:, permit_tokens] = False
