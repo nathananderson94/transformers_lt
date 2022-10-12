@@ -187,8 +187,8 @@ class VocabFSA:
         self.cur_state = self.state_dict[self.cur_state][self.last_token_id]
 
     def next_tokens(self):
-        """ Return a dict_keys of the next possible token ids given the current state. """
-        return self.state_dict[self.cur_state].keys()
+        """ Return a list of the next possible token ids given the current state. """
+        return list(self.state_dict[self.cur_state].keys())
 
     def __repr__(self):
         return "cur_state: {}\nlast_token: {}".format(self.cur_state, self.last_token_id)
