@@ -179,7 +179,7 @@ class VocabFSA:
         offset, _ = self.read_fst(ws_fst, offset, start_state=punc_final_state, final_state=self.start_state)
         offset, _ = self.read_fst(ws_fst, offset, start_state=self.start_state, final_state=self.start_state)
 
-    def advance_state(self, token_id):
+    def advance(self, token_id):
         """ Given the following token_id, update the current state. """
         assert self.cur_state in self.state_dict, f"{self.cur_state} is not a valid state."
         assert token_id in self.state_dict[self.cur_state], f"{token} is not a valid token for the state {self.cur_state}"

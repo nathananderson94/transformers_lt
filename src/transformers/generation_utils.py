@@ -1823,14 +1823,14 @@ class GenerationMixin:
 
             # argmax
             next_tokens = torch.argmax(next_tokens_scores, dim=-1)
-            print(next_tokens)
 
             # finished sentences should have their next token be a padding token
             if eos_token_id is not None:
                 if pad_token_id is None:
                     raise ValueError("If `eos_token_id` is defined, make sure that `pad_token_id` is defined.")
                 next_tokens = next_tokens * unfinished_sequences + pad_token_id * (1 - unfinished_sequences)
-            print('\t', eos_token_id, unfinished_sequences)
+
+            self.vocab_fsa.advance(next_tokens.item())
 
             # update generated ids, model inputs, and length for next step
             input_ids = torch.cat([input_ids, next_tokens[:, None]], dim=-1)
