@@ -149,10 +149,11 @@ class VocabFSA:
                 new_state = orig_state + offset
 
             for arc in fst.arcs(orig_state):
+                token = arc.ilabel - 1  # Shift tokens back down so they align with the actual model
                 if self.is_final(fst, arc.nextstate) and final_state is not None:
-                    self.state_dict[new_state][arc.ilabel] = final_state
+                    self.state_dict[new_state][token] = final_state
                 else:
-                    self.state_dict[new_state][arc.ilabel] = arc.nextstate + offset
+                    self.state_dict[new_state][token] = arc.nextstate + offset
 
         new_offset = offset + len([state for state in fst.states()]) - 1
 
