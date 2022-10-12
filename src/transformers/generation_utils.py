@@ -1352,9 +1352,6 @@ class GenerationMixin:
                 "Diverse beam search cannot be used in sampling mode. Make sure that `do_sample` is set to `False`."
             )
 
-        print(is_constraint_gen_mode, is_greedy_gen_mode, is_sample_gen_mode, is_beam_gen_mode,
-              is_beam_sample_gen_mode, is_group_beam_gen_mode)
-
         # 7. prepare distribution pre_processing samplers
         logits_processor = self._get_logits_processor(
             repetition_penalty=repetition_penalty,
